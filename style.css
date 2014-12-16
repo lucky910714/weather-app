@@ -5,52 +5,142 @@ html,body {
    	height: 100%;
    	margin: 0 auto;
 }
-#wrapper {
-	min-height: 100%;
-	/*width: 950px;*/
-	margin: 0 auto;
 
+
+
+@media (max-width: 400px){
+
+
+body{
+	
+	background-color: #eeae63;}
+	#wrapper {
+	min-height: 100%;
+	margin: 0 auto;
+ background-color: #eeae63;
 }
+#icon1 {
+	
+	width: 200px;
+	display: block;
+}
+
+#icon1 img {
+	margin-top:10px;
+	width: 200px;
+	margin-left: 50px;
+	height: auto;
+}
+
+
+#day{ color:#f78103;
+padding-right: 10px;
+text-align: left;
+margin-left: 25px;
+text-decoration: underline;
+letter-spacing: 0.1em;
+font-size: 30px;
+font-weight: bold;}
 
 #temp {
 	position: relative;
 	margin-top:0px;
-   font-size:100px;	
-   -webkit-text-stroke: .5px #FFFFFF;
+   font-size:10px;	
+  
 }
+
+.temps{font-size: 16px;	 word-spacing: 10px;
+margin-left: 30px; padding-right: 20px; }
+
+ul,li{margin-left:5px; 
+	list-style:none;
+	font-size: 13px;
+	 margin-top: 8px; 
+	 color:#fff;
+}
+}
+
+
+@media (min-width: 600px) and (max-width: 640px){
+
+
+
+body{
+	
+	background-color: #e1a3e8;}
+
+	#wrapper {
+	min-height: 100%;
+	margin: 0 auto;
+	background-color: #e1a3e8;
+}
+
+#temp {
+	position: relative;
+
+	color:#0e81bd;
+   font-size:60px;	
+}
+
+#icon1 {
+	margin: 0 auto !important;
+	width: 200px;
+	display: block;
+}
+#icon1 img {
+	margin-top:0px;
+	width: 200px; margin-left: 150px;
+	height: auto;
+}
+
+#day{ color:#0e81bd;
+padding:30px;
+margin-top: -330px;
+text-align: left;
+letter-spacing: 1.0em;
+
+font-size: 30px;
+font-weight: bold;}
+
+
+
+#unorder{
+width:400px;
+margin-left:20px;
+}
+
+
+
+.temps {margin-left: 10px;width: 270px;
+	border-top: solid 1px #000;
+	border-bottom: solid 1px #000;
+	word-spacing: 10px;
+	margin-bottom: 30px;
+text-align: left;
+padding-right: 10px;
+letter-spacing: 0.5em;
+font-size:15px;
+	list-style:none;
+	display: block;
+	 color:#fff;
+}
+
+.tempnumbers {
+	float:right;
+}
+
+
+
 
 .degrees:after {
 	content: "\00b0";
 }
 
-#icon1 {
-	margin: 0 auto !important;
-	width: 250px;
-	display: block;
-}
-
-#icon1 img {
-	width: 250px;
-	height: auto;
-}
 
 
 
-h1 {
-	font-size:12px;
-}
 
-ul li {
-	list-style:none;
-
-	float: left;
-	padding: 0px 15px 0px 15px;
-	color:#FFFFFF;
-	background: #DEDEDE;
-}
-
-
-#date{text-align: right; font-size: 20px; background-color: black;}
+#date{text-align: right; font-size: 10px; background-color: black;}
 #time{}
-#day{}
+
 

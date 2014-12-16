@@ -6,6 +6,7 @@ $(document).ready(function(){
 	var defaultLat = '40.6760148';
 	var defaultLng = '-73.9785012';
 
+	var globalWeather;
 	/*
 		1. Request the user's location via their browser
 	*/
@@ -30,9 +31,7 @@ $(document).ready(function(){
 		getWeatherWithPos(defaultLat,defaultLng);
 	}
 
-	/*
-		2. Request weather data for a location
-	*/
+	
 
 	// Request weather from forecast.io with a latitude/longitude
 	function getWeatherWithPos(lat,lng) {
@@ -80,30 +79,13 @@ var day  = days[d.getDay()]; // This will give you the day of the week
 //$('#date').text(date);
 //$('#time').text(time);
 $('#day').text(day).css({
-      "font-weight": "bolder",
-	  "font-size":"30px",
-	  "color":"rgba(0,0,0,0.3)",
-	  "text-align":"center",
-	  "margin-top":"20px",
+
+
     });
  
-/*$('#icon1').css({ "width":"350px",
+$('#icon1').css({ "width":"150px",
 	"margin":"0 auto",
-});*/
-
-
-	$(document).ready(function() {
-
-    // Mock data for testing
-    var weeklyForecast = ["clear-day", "clear-night", "rain", "rain", "wind", "cloud", "cloud", "fog"];
-    for ( var i = 0; i < weeklyForecast.length; i++) {
-        var dailyWeather = weeklyForecast[i];
-        var day = $('li').get(i);
-        var color = parseDay(dailyWeather);
-        $(day).css( 'background-color', color );
-    }
- 
- 
+});
 
     function parseDay(condition){
 
@@ -111,7 +93,7 @@ $('#day').text(day).css({
 
     		case "clear-day":
     		case "clear-night":	
-                var color = "#ccc";
+                var color = "#C6DFFF";
 
                 break;
     		case "rain":
@@ -132,9 +114,8 @@ $('#day').text(day).css({
     			break;	
 
         return color;
-	}
+		}
     }
-});
 
 
 
@@ -142,28 +123,66 @@ $('#day').text(day).css({
 
 	// Parse and use the weather values from the forecast.io JSON
 	function parseWeather(data) {
+		// Now this variable is global!
+		globalWeather = data;
+		//formatCurrentWeather(data);
+		formatWeeklyWeather(data);
+	}
+
+	// for one day's weather
+	function formatCurrentWeather(data){
+		console.log("CURRENT");
 		var precipColor = getPrecipColor(data.currently.precipProbability);
 		var tempColor	= data.currently.apparentTemperature;
+
+		console.log("p " + precipColor);
 		
+		$('<img>').attr("src", "images/"+data.currently.icon +  ".png").appendTo('#icon1');
 
-
-
-
-$('<img>').attr("src", "images/"+data.currently.icon +  ".png").appendTo('#icon1');
-
-	$('#temp').text("Currently: " + data.currently.apparentTemperature).css({
-      "font-weight": "bolder",
-	  "font-size":"30px",
-	  "padding":"10px",
-	  "margin-bottom":"40px",
-	  "background-color":"rgba(0,0,0,0.3)",
-	  "color":"white",
-	  "text-align":"center",
-    });
+		$('#temp').text("Currently: " + data.currently.apparentTemperature).css({
+	
+		  "text-align":"center",
+	    });
 		$('#temp').addClass('degrees');
 		$('body').css('background-color',precipColor);
 		addWindAnimation();
 	}
+
+	// weekly code goes here
+	function formatWeeklyWeather(data){
+		console.log(data);
+		$('<img>').attr("src", "images/"+data.currently.icon +  ".png").appendTo('#icon1');
+
+		// Days of the week array
+		var dailyData   = data.daily.data;
+		for ( var i = 0; i < dailyData.length; i++) {
+			// the current day we're looping through
+        	var daysWeather = dailyData[i];
+        	console.log(daysWeather);
+
+        	var day = $('.temps').get(i);
+	        var color = parseDay(daysWeather);
+	        var weekday = getWeekday(daysWeather.time);
+	        var apparentTemp = daysWeather.apparentTemperatureMax;
+        	$(day).text(weekday + " " + apparentTemp);
+        	
+    	}
+
+	
+	}
+
+	function getWeekday(timestamp)
+	{
+		// you need to specify the actual names of the days
+		var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+		// Create a date object and set the time
+		var d = new Date();
+		d.setTime(timestamp*1000);
+
+		return days[d.getDay()];
+	}
+
 	function showError(){
 		$('#temp').text('Oh no! Your forecast is currently unavailable.');
 		$('body').css('background-color','rgb(240,14,10)');	
@@ -175,25 +194,23 @@ $('<img>').attr("src", "images/"+data.currently.icon +  ".png").appendTo('#icon1
 				  .animate({left: '-='+ windSpeed  },4000,addWindAnimation);
 	}
 	
-
-
-
-
-
 	function getPrecipColor(precipitation) {
+		console.log("g: " + globalWeather);
+		console.log(precipitation)
 		if ( precipitation > .75 ) 
 			return	'#3686FF';<!--blue-->
 		if ( precipitation > .50 ) 
 			return	'#ffc7c7';<!--pastel orange-->
 		if ( precipitation > .30 ) 
-			return	'#fff';<!--whit-->
+			return	'#e6960c';<!--organge-->
+
 		if ( precipitation > .25 ) 
 			return	'#C6DFFF';<!--lavender-->
-		//return '#FFF3B6';<!--pastel-->
+i
+
+		// the last return statement is the default -- if there is no preciptation 
+		return '#FFF3B6';<!--pastel-->
 	}
-
-
-
 
 
 
